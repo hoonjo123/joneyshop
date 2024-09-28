@@ -1,16 +1,18 @@
 package com.joney.shop.Domain;
 import jakarta.persistence.*;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Entity
+@ToString
 public class Board {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    public Long id;
 
-    @Column(name = "게시글 제목",nullable = false)
-    String title;
+    @Column()
+    public String title;
 
-    @Column(name = "작성 시간")
-    LocalDateTime data;
+    @Column()
+    public String data;
 }

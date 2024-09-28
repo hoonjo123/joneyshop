@@ -36,8 +36,8 @@ public class ItemController {
     @GetMapping("/list")
     String list(Model model) {
         List<Item> result = itemRepository.findAll(); //item테이블의 모든 정보, list자료형
-        System.out.println(result.get(0).price);
-        System.out.println(result.get(0).title);
+//        System.out.println(result.get(0).price);
+//        System.out.println(result.get(0).title);
 
         //여러 데이터를 한 변수에 넣으려면? arraylist
 //        ArrayList<Integer> a = new ArrayList<>();
@@ -50,7 +50,10 @@ public class ItemController {
 //        System.out.println(a.get(0));
 //        System.out.println(a.get(1));
 
-        model.addAttribute("name", "훈");
+        model.addAttribute("items", result);
+        var a = new Item();
+        System.out.println(a.toString());
+
         return "list.html";
     }
 }
