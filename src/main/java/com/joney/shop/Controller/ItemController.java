@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
 
 
 @Controller
@@ -36,10 +38,46 @@ public class ItemController {
     @GetMapping("/list")
     String list(Model model) {
         List<Item> result = itemRepository.findAll(); //item테이블의 모든 정보, list자료형
-//        System.out.println(result.get(0).price);
+        model.addAttribute("items", result);
+        var a = new Item();
+        System.out.println(a.toString());
+
+        return "list.html";
+    }
+
+    @GetMapping("/write")
+    String write(){
+        return "write.html";
+    }
+
+    @PostMapping("/add")
+//    String addPost(@RequestParam String title,@RequestParam Integer price)
+    String addPost(@RequestParam Map<String, String> formData){
+        //유저가 보낸 데이터를 어떤식으로 출력할 수 있을까?
+        //parameter를 통해 유저가 어떤 이름으로 보낸지 알 수 있다.
+//        //맵자료형
+//        HashMap<String,Object> test = new HashMap<>();
+//        test.put("name","kim");
+//        test.put("age","20");
+//        System.out.println(test);
+//        System.out.println(formData);
+
+        String title = formData.get("title");
+        Integer price = Integer.parseInt(formData.get("price"));
+
+        Item newItem = new Item();
+        newItem.setTitle(title);
+        newItem.setPrice(price);
+
+        itemRepository.save(newItem);
+        return "redirect:/list";
+    }
+
+
+    //        System.out.println(result.get(0).price);
 //        System.out.println(result.get(0).title);
 
-        //여러 데이터를 한 변수에 넣으려면? arraylist
+    //여러 데이터를 한 변수에 넣으려면? arraylist
 //        ArrayList<Integer> a = new ArrayList<>();
 //        ArrayList<String> a = new ArrayList<>();
 //        ArrayList<Object> a = new ArrayList<>();
@@ -49,12 +87,5 @@ public class ItemController {
 //        a.add(40);
 //        System.out.println(a.get(0));
 //        System.out.println(a.get(1));
-
-        model.addAttribute("items", result);
-        var a = new Item();
-        System.out.println(a.toString());
-
-        return "list.html";
-    }
 }
 
