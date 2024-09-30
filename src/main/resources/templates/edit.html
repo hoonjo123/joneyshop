@@ -13,14 +13,20 @@
 <body>
 <div th:replace="~{ nav.html:: navbar}"></div>
 
-<form th:action="@{/edit/{id}(id=${item.id})}" th:object="${item}" method="post">
-    <!-- 제목 필드 -->
-    <label for="title">제목:</label>
-    <input id="title" name="title" th:value="${item.title}"><br>
+<!--<form th:action="@{/edit/{id}(id=${item.id})}" th:object="${item}" method="post">-->
+<!--    &lt;!&ndash; 제목 필드 &ndash;&gt;-->
+<!--    <label for="title">제목:</label>-->
+<!--    <input id="title" name="title" th:value="${item.title}"><br>-->
 
-    <!-- 가격 필드 (name 속성 수정) -->
-    <label for="price">가격:</label>
-    <input id="price" name="price" th:value="${item.price}"><br>
+<!--    &lt;!&ndash; 가격 필드 (name 속성 수정) &ndash;&gt;-->
+<!--    <label for="price">가격:</label>-->
+<!--    <input id="price" name="price" th:value="${item.price}"><br>-->
+
+<form action="/edit" method="POST">
+    <input name="id" th:value="${item.id}">
+    <input name="title" th:value="${item.title}">
+    <input name="price" th:value="${item.price}">
+
 
     <button type="submit">전송</button>
 </form>

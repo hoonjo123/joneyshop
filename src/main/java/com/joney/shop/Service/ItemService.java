@@ -7,6 +7,8 @@ import com.joney.shop.Repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+
 @RequiredArgsConstructor
 @Service
 public class ItemService {
@@ -17,7 +19,12 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    public void editItem(@ModelAttribute Item item){
+    public void editItem(String title, Integer price, Long id){
+
+        Item item = new Item();
+        item.setId(id);
+        item.setTitle(title);
+        item.setPrice(price);
         itemRepository.save(item);
     }
 }

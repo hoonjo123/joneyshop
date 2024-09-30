@@ -135,15 +135,20 @@ public class ItemController {
             return "redirect:/list";
         }
     }
-    @PostMapping("/edit/{id}")
-    String ItemEdit(@PathVariable Long id, @ModelAttribute Item item){
-        Optional<Item> result = itemRepository.findById(id);
-        if(result.isPresent()){
-            itemService.editItem(item);
-            return "redirect:/detail/" + id;
-        }else{
-            return "redirect:/list";
-        }
+//    @PostMapping("/edit/{id}")
+//    String ItemEdit(@PathVariable Long id, @ModelAttribute Item item){
+//        Optional<Item> result = itemRepository.findById(id);
+//        if(result.isPresent()){
+//            itemService.editItem(item);
+//            return "redirect:/detail/" + id;
+//        }else{
+//            return "redirect:/list";
+//        }
+//    }
+    @PostMapping("/edit")
+    String editItem(String title, Integer price, Long id){
+        itemService.editItem(title,price,id);
+        return "redirect:/list";
     }
 }
 
