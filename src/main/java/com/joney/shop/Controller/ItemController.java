@@ -2,6 +2,7 @@ package com.joney.shop.Controller;
 
 import com.joney.shop.Domain.Item;
 import com.joney.shop.Repository.ItemRepository;
+import com.joney.shop.Service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -25,6 +26,7 @@ public class ItemController {
 
     //변수를 사용하기 위해 requiredargsconstr..를 붙여줌
     private final ItemRepository itemRepository;
+    private final ItemService itemService;
 
     //콘스트럭터 : 롬복을 쓰기 싫다면 ? generate => 콘스트럭터 사용하기
 //    @Autowired
@@ -73,9 +75,11 @@ public class ItemController {
         //조금 더 쉽게 변환해보자. @ModelAttribute Item item =>
 
 //        System.out.println(item);
-        itemRepository.save(item);
+//        itemRepository.save(item);
+        itemService.saveItem(item);
 
-        return "redirect:/list";
+        //1. new class(
+         return "redirect:/list";
     }
 
     //상품 상세페이지
@@ -101,7 +105,7 @@ public class ItemController {
             return "detail.html";
         } else {
             model.addAttribute("에러", "아이템을 찾을 수 없습니다.");
-            throw new RuntimeException("해당 아이템을 찾을 수 없습니다.");
+            throw new RuntimeException("해당 아이템을  수 없습니다.");
         }
 
 
