@@ -88,13 +88,15 @@ public class ItemController {
         //Optional출력할때는 .get을 사용
 //        System.out.println(result.get()); //result 비어있으면 어쩔것임
 
+
         //꼭 체크후 꺼내보자.
         if(result.isPresent()){
-            Item item = result.get();
+//            Item item = result.get();
             System.out.println(result.get());
-            model.addAttribute("item",item);
+            model.addAttribute("items",result.get());
         }else{
             model.addAttribute("에러","아이템을 찾을 수 없습니다.");
+            return "list.html";
         }
 
         return "detail.html";

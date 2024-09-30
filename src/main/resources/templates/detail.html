@@ -19,10 +19,10 @@
 <!--  <h4>금도금 바지</h4>-->
 <!--</div>-->
 
-<div th:if="${item}">
-  <h2 th:text="${item.title}"></h2>
+<div th:if="${items}">
+  <h2 th:text="${items.title}"></h2>
   <img src="https://placehold.co/300">
-  <p th:text="'Price: ' + ${item.price}"></p>
+  <p th:text="${items.price + '원'}"></p>
 </div>
 
 </body>
