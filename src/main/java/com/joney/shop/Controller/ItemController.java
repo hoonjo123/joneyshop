@@ -76,6 +76,30 @@ public class ItemController {
         return "redirect:/list";
     }
 
+    //상품 상세페이지
+    //URL 파라미터 문법을 사용해서 비슷한 url의 api를 여러개 만들필요 없이 생성해보자
+    @GetMapping("/detail/{id}")
+    String detail(@PathVariable Long id, Model model){
+        System.out.println("받은아이디 :"+ id);
+        Optional<Item> result = itemRepository.findById(id);
+        //Optional 기입해야하는 이유 : 만든 사람이 그렇게 출력하도록 만들어짐, 비어있을수도, item일수도 있다
+        //만약 100L라고 한다면? 근데 없다면 null이다.
+
+        //Optional출력할때는 .get을 사용
+//        System.out.println(result.get()); //result 비어있으면 어쩔것임
+
+        //꼭 체크후 꺼내보자.
+        if(result.isPresent()){
+            Item item = result.get();
+            System.out.println(result.get());
+            model.addAttribute("item",item);
+        }else{
+            model.addAttribute("에러","아이템을 찾을 수 없습니다.");
+        }
+
+        return "detail.html";
+    }
+
 
     //        System.out.println(result.get(0).price);
 //        System.out.println(result.get(0).title);
