@@ -20,7 +20,7 @@ public class MyExceptionHandler {
     public ResponseEntity<String> handler1(){
         //컨트롤러 파일이 100만개 있는경우... 매번 쓰기 귀찮은데?
         //하나의 파일을 만들어서 모든 파일에 적용되도록 하자
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("error");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("올바른 경로가 아닙니다");
     }
 
 }

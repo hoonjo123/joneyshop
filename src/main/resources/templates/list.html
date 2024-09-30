@@ -33,8 +33,11 @@
                 <h4 th:text="${i.title} "></h4>
             </a>
             <h4 th:text="${i.price + '원'}"></h4>
+            <a th:href="@{/edit/{id}(id=${i.id})}">상품수정하기✏️</a>
         </div>
     </div>
+
+
 
 
 

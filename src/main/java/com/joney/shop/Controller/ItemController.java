@@ -122,8 +122,28 @@ public class ItemController {
 //        a.add(40);
 //        System.out.println(a.get(0));
 //        System.out.println(a.get(1));
+
     }
 
-
+    @GetMapping("/edit/{id}")
+    String showItemEdit(@PathVariable Long id,Model model){
+        Optional<Item> result = itemRepository.findById(id);
+        if(result.isPresent()){
+            model.addAttribute("item", result.get());
+            return "edit.html";
+        }else{
+            return "redirect:/list";
+        }
+    }
+    @PostMapping("/edit/{id}")
+    String ItemEdit(@PathVariable Long id, @ModelAttribute Item item){
+        Optional<Item> result = itemRepository.findById(id);
+        if(result.isPresent()){
+            itemService.editItem(item);
+            return "redirect:/detail/" + id;
+        }else{
+            return "redirect:/list";
+        }
+    }
 }
 

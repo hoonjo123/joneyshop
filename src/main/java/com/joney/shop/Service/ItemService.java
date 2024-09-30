@@ -16,4 +16,8 @@ public class ItemService {
     public void saveItem(@ModelAttribute Item item){
         itemRepository.save(item);
     }
+
+    public void editItem(@ModelAttribute Item item){
+        itemRepository.save(item);
+    }
 }
