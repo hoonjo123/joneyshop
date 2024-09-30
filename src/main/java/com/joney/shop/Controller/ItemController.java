@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -52,7 +49,8 @@ public class ItemController {
 
     @PostMapping("/add")
 //    String addPost(@RequestParam String title,@RequestParam Integer price)
-    String addPost(@RequestParam Map<String, String> formData){
+//    String addPost(@RequestParam Map<String, String> formData)
+    String addPost(@ModelAttribute Item item){
         //유저가 보낸 데이터를 어떤식으로 출력할 수 있을까?
         //parameter를 통해 유저가 어떤 이름으로 보낸지 알 수 있다.
 //        //맵자료형
@@ -62,14 +60,19 @@ public class ItemController {
 //        System.out.println(test);
 //        System.out.println(formData);
 
-        String title = formData.get("title");
-        Integer price = Integer.parseInt(formData.get("price"));
+//        String title = formData.get("title");
+//        Integer price = Integer.parseInt(formData.get("price"));
+//
+//        Item item = new Item();
+//        item.setTitle(title);
+//        item.setPrice(price);
+//        itemRepository.save(item);
 
-        Item newItem = new Item();
-        newItem.setTitle(title);
-        newItem.setPrice(price);
+        //조금 더 쉽게 변환해보자. @ModelAttribute Item item =>
 
-        itemRepository.save(newItem);
+//        System.out.println(item);
+        itemRepository.save(item);
+
         return "redirect:/list";
     }
 

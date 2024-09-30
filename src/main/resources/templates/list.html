@@ -22,6 +22,10 @@
 
 <!--    귀찮으니 for문을 써서 반복해보자.-->
 
+<!--페이지가 100만개 있다고 한다면 html url 재사용해보자-->
+
+    <div th:replace="~{ nav.html:: navbar}"></div>
+
     <div class="card" th:each="i : ${items}">
         <img src="https://placehold.co/300">
         <div>
@@ -29,6 +33,8 @@
             <h4 th:text="${i.price}"></h4>
         </div>
     </div>
+
+
 
 
 
