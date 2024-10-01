@@ -152,10 +152,19 @@ public class ItemController {
     }
 
     @GetMapping("/test1")
-    String editItem1(){
-        System.out.println("요청 들어옴");
+//    String editItem1(@RequestBody Map<String, Object> body){
+        String editItem1(@RequestParam String name, String age){
+            System.out.println(name);
+            System.out.println(age);
+
+//        System.out.println(body.get("name"));
+        //body안의 데이터를 출력하는법 : 파라미터 써주면됨
         return "redirect:/list";
     }
-
+    @PostMapping("/deleteitem/{id}")
+    String deleteItem(@PathVariable Long id){
+        itemService.deleteItem(id);
+        return "redirect:/list";
+    }
 }
 
