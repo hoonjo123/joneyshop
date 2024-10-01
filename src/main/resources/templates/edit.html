@@ -23,7 +23,7 @@
 <!--    <input id="price" name="price" th:value="${item.price}"><br>-->
 
 <form action="/edit" method="POST">
-    <input name="id" th:value="${item.id}">
+    <input name="id" th:value="${item.id}" style="display:none">
     <input name="title" th:value="${item.title}">
     <input name="price" th:value="${item.price}">
 

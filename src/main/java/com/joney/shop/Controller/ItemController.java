@@ -150,5 +150,12 @@ public class ItemController {
         itemService.editItem(title,price,id);
         return "redirect:/list";
     }
+
+    @GetMapping("/test1")
+    String editItem1(){
+        System.out.println("요청 들어옴");
+        return "redirect:/list";
+    }
+
 }
 
