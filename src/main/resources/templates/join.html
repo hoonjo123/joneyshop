@@ -11,15 +11,16 @@
 
 </head>
 <body>
-    <div th:replace="~{ nav.html:: navbar}"></div>
+<div th:replace="~{ nav.html:: navbar}"></div>
 
-    <form action="/add" method="POST">
-        상품이름
-        <input name="title">
-        가격
-        <input name="price" >
-        <button type="submit">전송</button>
-    </form>
+
+<form action="/join" method="POST">
+
+    <input name="name" placeholder="이름">
+    <input name="username" placeholder="아이디">
+    <input name="password" type="password">
+    <button type="submit">가입하기</button>
+</form>
 
 </body>
 </html>
