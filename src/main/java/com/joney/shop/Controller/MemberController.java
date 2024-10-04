@@ -5,6 +5,7 @@ import com.joney.shop.Repository.MemberRepository;
 import com.joney.shop.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ public class MemberController {
 
     private final MemberRepository memberRepository;
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/members")
     String memberList(Model model) {
@@ -50,14 +52,21 @@ public class MemberController {
         return "redirect:/list";
     }
 
-    @GetMapping("/join")
+    @GetMapping("/register")
     String joinMember(){
-        return "join.html";
+        return "register.html";
     }
 
-    @PostMapping("/join")
-    String joinMember(@ModelAttribute Member member){
-        memberService.saveMember(member);
-        return "join.html";
+    @PostMapping("/member")
+    String joinMember(String username, String password, String displayname){
+        Member member = new Member();
+
+        member.setUsername(username);
+        var hash = passwordEncoder.encode(password);
+
+        member.setPassword(hash);
+        member.setDisplayName(displayname);
+        memberRepository.save(member);
+        return "redirect:/list";
     }
 }
