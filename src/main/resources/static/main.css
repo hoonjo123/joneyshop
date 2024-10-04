@@ -31,8 +31,8 @@ input, button {
  vertical-align : middle;
 }
 button {
- background : black;
- color : white;
+ background : white;
+ color : black;
  border : none;
 }
 input {

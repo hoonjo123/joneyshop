@@ -161,10 +161,13 @@ public class ItemController {
         //body안의 데이터를 출력하는법 : 파라미터 써주면됨
         return "redirect:/list";
     }
-    @PostMapping("/deleteitem/{id}")
-    String deleteItem(@PathVariable Long id){
-        itemService.deleteItem(id);
-        return "redirect:/list";
+    @DeleteMapping("/deleteitem")
+    ResponseEntity<String> deleteItem(@RequestParam Long id){
+
+        itemRepository.deleteById(id);
+
+//        itemService.deleteItem(id);
+        return ResponseEntity.status(200).body("삭제완료띄");
     }
 }
 
