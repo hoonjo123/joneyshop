@@ -67,6 +67,13 @@ public class MemberController {
         member.setPassword(hash);
         member.setDisplayName(displayname);
         memberRepository.save(member);
-        return "redirect:/list";
+        return "redirect:/login";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        var result = memberRepository.findByUsername("jo");
+        System.out.println(result.get().getDisplayName());
+        return "login";
     }
 }

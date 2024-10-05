@@ -29,6 +29,13 @@ public class SecurityConfig {
         http.authorizeHttpRequests((authorize) ->
                 authorize.requestMatchers("/**").permitAll()
         );
+        http.formLogin((formLogin) -> formLogin.loginPage("/login")
+                .defaultSuccessUrl("/")
+
+                //실패시 이동할 페이지, 기본적으로 login/error? 여기로 이동
+                .failureUrl("/fail")
+        );
+
         return http.build();
     }
 }
