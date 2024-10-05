@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class HomeController {
     @GetMapping("/")
     String hello(){
-        return "index.html";
+        return "home.html";
     }
 
     @GetMapping("/about")
