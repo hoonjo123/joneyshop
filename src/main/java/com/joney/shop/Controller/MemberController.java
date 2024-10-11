@@ -4,6 +4,8 @@ import com.joney.shop.Domain.Member;
 import com.joney.shop.Repository.MemberRepository;
 import com.joney.shop.Service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -75,5 +77,17 @@ public class MemberController {
         var result = memberRepository.findByUsername("jo");
 //        System.out.println(result.get().getDisplayName());
         return "login.html";
+    }
+
+    @GetMapping("/mypage")
+    String mypage(Authentication auth){
+        System.out.println(auth.getName());
+        System.out.println(auth);
+        //로그인여부
+        System.out.println(auth.isAuthenticated());
+        System.out.println(auth.getAuthorities().contains(new SimpleGrantedAuthority("일반유저")));
+
+
+        return "mypage.html";
     }
 }
