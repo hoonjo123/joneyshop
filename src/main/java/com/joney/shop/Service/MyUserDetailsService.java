@@ -42,5 +42,5 @@ public class MyUserDetailsService implements UserDetailsService {
         //특정아이디에 권한을 주고 싶다면? if문을 써서 해당 유저가 관리자임이라고 명시해주면 된다.
 
         return new User(user.getUsername(), user.getPassword(), authorities);
-}
+    }
 }
