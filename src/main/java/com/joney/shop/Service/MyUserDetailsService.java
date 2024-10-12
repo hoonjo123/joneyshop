@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +27,7 @@ public class MyUserDetailsService implements UserDetailsService {
 //        입장권을 제출하면 로그인 여부 판단 가능
         // 스프링시큐리티가 자동으로 검증을 해주지만 스프링은어디에 비번이 저장되어있는지 모름 코딩 작성 필요
         var result = memberRepository.findByUsername(username);
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             throw new UsernameNotFoundException("그런아이디없는데?");
 //        user.setUsername();
 //        user.getDisplayName();
@@ -41,6 +40,14 @@ public class MyUserDetailsService implements UserDetailsService {
 
         //특정아이디에 권한을 주고 싶다면? if문을 써서 해당 유저가 관리자임이라고 명시해주면 된다.
 
-        return new User(user.getUsername(), user.getPassword(), authorities);
+        CustomUser customUser = new CustomUser(user.getUsername(),user.getPassword(),authorities);
+        customUser.displayName = user.getDisplayName();
+        customUser.id = user.getId();
+
+        return customUser;
+
+//        return new User(user.getUsername(), user.getPassword(), authorities);
+        }
     }
-}
+
+

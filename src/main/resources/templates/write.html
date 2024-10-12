@@ -13,7 +13,9 @@
 <body>
     <div th:replace="~{ nav.html:: navbar}"></div>
 
+
     <form action="/add" method="POST">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         상품이름
         <input name="title">
         가격

@@ -2,6 +2,7 @@ package com.joney.shop.Controller;
 
 import com.joney.shop.Domain.Member;
 import com.joney.shop.Repository.MemberRepository;
+import com.joney.shop.Service.CustomUser;
 import com.joney.shop.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -81,13 +83,13 @@ public class MemberController {
 
     @GetMapping("/mypage")
     String mypage(Authentication auth){
-        System.out.println(auth.getName());
-        System.out.println(auth);
-        //로그인여부
-        System.out.println(auth.isAuthenticated());
+//        System.out.println(auth.getName());
+//        System.out.println(auth);
+//        //로그인여부
+//        System.out.println(auth.isAuthenticated());
         System.out.println(auth.getAuthorities().contains(new SimpleGrantedAuthority("일반유저")));
-
-
+        CustomUser result = (CustomUser)auth.getPrincipal();
+        System.out.println(result.displayName);
         return "mypage.html";
     }
 }
