@@ -7,6 +7,7 @@ import com.joney.shop.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -91,24 +92,34 @@ public class MemberController {
         return "mypage.html";
     }
 
-    @GetMapping("/user/1")
+    @GetMapping("/user/{id}")
     @ResponseBody
-    public MemberDto getUser(){
-        var a = memberRepository.findById(1L);
+    public MemberDto getUser(@PathVariable Long id){
+        var a = memberRepository.findById(id);
+        if (a.isEmpty()){
+            throw new UsernameNotFoundException("해당 유저를 찾을 수 없습니다.");
+        }
         var result = a.get();
 //
 //        var map = new HashMap<>();
 //        map.put()
 
-        var data = new MemberDto(result.getUsername(),result.getDisplayName());
+        var data = new MemberDto(result.getUsername(),result.getDisplayName(),result.getId());
         return data;
     }
 }
 class MemberDto{
     public String username;
     public String displayName;
+    public Long id;
     MemberDto(String a, String b){
         this.username = a;
         this.displayName = b;
     }
+    MemberDto(String a, String b,Long c){
+        this.username = a;
+        this.displayName = b;
+        this.id = c;
+    }
 }
+
