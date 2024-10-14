@@ -93,21 +93,22 @@ public class MemberController {
 
     @GetMapping("/user/1")
     @ResponseBody
-    public Data getUser(){
+    public MemberDto getUser(){
         var a = memberRepository.findById(1L);
         var result = a.get();
 //
 //        var map = new HashMap<>();
 //        map.put()
 
-        var data = new Data();
-        data.username = result.getUsername();
-        data.displayName = result.getDisplayName();
-
+        var data = new MemberDto(result.getUsername(),result.getDisplayName());
         return data;
     }
 }
-class Data{
+class MemberDto{
     public String username;
     public String displayName;
+    MemberDto(String a, String b){
+        this.username = a;
+        this.displayName = b;
+    }
 }
