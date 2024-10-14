@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -92,9 +93,21 @@ public class MemberController {
 
     @GetMapping("/user/1")
     @ResponseBody
-    public Member getUser(){
+    public Data getUser(){
         var a = memberRepository.findById(1L);
         var result = a.get();
-        return result;
+//
+//        var map = new HashMap<>();
+//        map.put()
+
+        var data = new Data();
+        data.username = result.getUsername();
+        data.displayName = result.getDisplayName();
+
+        return data;
     }
+}
+class Data{
+    public String username;
+    public String displayName;
 }
