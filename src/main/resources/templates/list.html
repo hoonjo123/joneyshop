@@ -55,6 +55,19 @@
 
 <!--    <button class="btn">클릭하면 자바스크립트 실행</button>-->
 
+
+<div class="pagination">
+    <!-- 이전 페이지 버튼 -->
+    <a th:if="${hasPrevious}" th:href="@{|/list/page/${currentPage - 1}|}">이전</a>
+
+    <!-- 현재 페이지 표시 -->
+    <span th:text="'Page ' + ${currentPage}" class="active"></span>
+
+    <!-- 다음 페이지 버튼 -->
+    <a th:if="${hasNext}" th:href="@{|/list/page/${currentPage + 1}|}">다음</a>
+</div>
+
+
 <script>
 
 

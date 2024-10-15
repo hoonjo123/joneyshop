@@ -184,9 +184,15 @@ public class ItemController {
         Slice<Item> result = itemRepository.findPageBy(PageRequest.of(abc -1,5));
 
 //        result.getTotalPages();
-        result.hasNext();
+//        result.hasNext();
 
         model.addAttribute("items", result);
+        model.addAttribute("currentPage", abc);
+        model.addAttribute("hasNext", result.hasNext());
+        System.out.println(result.hasNext());
+        model.addAttribute("hasPrevious", result.hasPrevious());
+
+//        model.addAttribute("items", result);
         return "list.html";
     }
 }
