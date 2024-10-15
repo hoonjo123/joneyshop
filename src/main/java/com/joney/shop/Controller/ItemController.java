@@ -6,6 +6,10 @@ import com.joney.shop.Service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -168,6 +172,21 @@ public class ItemController {
 
 //        itemService.deleteItem(id);
         return ResponseEntity.status(200).body("삭제완료띄");
+    }
+
+    //페이지네이션
+    @GetMapping("/list/page/{abc}")
+    String getListPage(Model model, @PathVariable Integer abc) {
+
+        System.out.println(abc);
+        //url 파라미터 -1 (인덱스 번호)임.
+        Page<Item> result = itemRepository.findPageBy(PageRequest.of(abc -1,5));
+
+        result.getTotalPages();
+        result.hasNext();
+
+        model.addAttribute("items", result);
+        return "list.html";
     }
 }
 
