@@ -3,6 +3,7 @@ package com.joney.shop.Repository;
 import com.joney.shop.Domain.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -13,5 +14,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
 
     //pageable을 위한 함수 생성
-    Page<Item> findPageBy(Pageable page);
+    Slice<Item> findPageBy(Pageable page);
 }

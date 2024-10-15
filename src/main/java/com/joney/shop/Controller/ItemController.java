@@ -10,6 +10,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -180,9 +181,9 @@ public class ItemController {
 
         System.out.println(abc);
         //url 파라미터 -1 (인덱스 번호)임.
-        Page<Item> result = itemRepository.findPageBy(PageRequest.of(abc -1,5));
+        Slice<Item> result = itemRepository.findPageBy(PageRequest.of(abc -1,5));
 
-        result.getTotalPages();
+//        result.getTotalPages();
         result.hasNext();
 
         model.addAttribute("items", result);
