@@ -3,6 +3,7 @@ package com.joney.shop.Controller;
 import com.joney.shop.Domain.Item;
 import com.joney.shop.Repository.ItemRepository;
 import com.joney.shop.Service.ItemService;
+import com.joney.shop.Service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -32,6 +33,7 @@ public class ItemController {
     //변수를 사용하기 위해 requiredargsconstr..를 붙여줌
     private final ItemRepository itemRepository;
     private final ItemService itemService;
+    private final S3Service s3Service;
 
     //콘스트럭터 : 롬복을 쓰기 싫다면 ? generate => 콘스트럭터 사용하기
 //    @Autowired
@@ -194,6 +196,15 @@ public class ItemController {
 
 //        model.addAttribute("items", result);
         return "list.html";
+    }
+
+    @GetMapping("/presigned-url")
+    @ResponseBody
+    String getURL(@RequestParam String filename){
+        System.out.println(filename);
+        var result = s3Service.createPresignedUrl("test/" + filename);
+        System.out.println(result);
+        return result;
     }
 }
 
