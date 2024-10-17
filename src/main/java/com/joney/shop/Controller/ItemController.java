@@ -108,7 +108,9 @@ public class ItemController {
         if (result.isPresent()) {
 //            Item item = result.get();
             System.out.println(result.get());
-            model.addAttribute("items", result.get());
+            Item item = result.get();
+            model.addAttribute("items", item);
+            model.addAttribute("imageUrl", item.getImageUrl());
             return "detail.html";
         } else {
             model.addAttribute("에러", "아이템을 찾을 수 없습니다.");

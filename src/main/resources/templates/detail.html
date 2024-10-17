@@ -21,7 +21,7 @@
 
 <div th:if="${items}">
   <h2 th:text="${items.title}"></h2>
-  <img src="https://placehold.co/300">
+  <img th:src="${imageUrl}" alt="상품 이미지">
   <p th:text="${items.price + '원'}"></p>
 </div>
 

@@ -38,4 +38,15 @@ public class Item {
 //    }
     //object의 변수들 한번에 출력하는 법
     //@ToString 롬복
+
+    @Column
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
