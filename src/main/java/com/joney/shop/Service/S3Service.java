@@ -23,6 +23,7 @@ public class S3Service {
                 .key(path)
                 .build();
 
+
         var preSignRequest = PutObjectPresignRequest.builder()
                 .signatureDuration(Duration.ofMinutes(10))
                 .putObjectRequest(putObjectRequest)
