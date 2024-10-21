@@ -42,6 +42,9 @@ public class Item {
     @Column
     private String imageUrl;
 
+
+
+
     public String getImageUrl() {
         return imageUrl;
     }

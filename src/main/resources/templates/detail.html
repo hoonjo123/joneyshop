@@ -21,9 +21,15 @@
 
 <div th:if="${items}">
   <h2 th:text="${items.title}"></h2>
-  <img th:src="${imageUrl}" alt="상품 이미지">
+  <img th:src="${imageUrl}" alt="상품 이미지" style="width: 300px; height: auto;">
   <p th:text="${items.price + '원'}"></p>
 </div>
+
+<form action="/comment" method="POST">
+  <input name="content" placeholder="댓글 입력해">
+  <input name="parent" th:value="${items.id}" type="hidden">
+  <button type="submit">전송</button>
+</form>
 
 </body>
 </html>
