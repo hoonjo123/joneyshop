@@ -1,6 +1,8 @@
 package com.joney.shop.Controller;
 
+import com.joney.shop.Domain.Comment;
 import com.joney.shop.Domain.Item;
+import com.joney.shop.Repository.CommentRepository;
 import com.joney.shop.Repository.ItemRepository;
 import com.joney.shop.Service.ItemService;
 import com.joney.shop.Service.S3Service;
@@ -21,6 +23,7 @@ import java.util.*;
 
 
 
+
 @Controller
 @RequiredArgsConstructor
 public class ItemController {
@@ -34,6 +37,7 @@ public class ItemController {
     private final ItemRepository itemRepository;
     private final ItemService itemService;
     private final S3Service s3Service;
+    private final CommentRepository commentRepository;
 
     //콘스트럭터 : 롬복을 쓰기 싫다면 ? generate => 콘스트럭터 사용하기
 //    @Autowired
@@ -93,10 +97,14 @@ public class ItemController {
     //URL 파라미터 문법을 사용해서 비슷한 url의 api를 여러개 만들필요 없이 생성해보자
     @GetMapping("/detail/{id}")
     String detail(@PathVariable Long id, Model model) {
-        System.out.println("받은아이디 :" + id);
+//        System.out.println("받은아이디 :" + id);
 
+        List<Comment> comments = commentRepository.findAllByParentId(id);
+        System.out.println(comments);
+        model.addAttribute("comments",comments);
 
         Optional<Item> result = itemRepository.findById(id);
+//        List<Comment> comments = commentRepository.findAll();
         //Optional 기입해야하는 이유 : 만든 사람이 그렇게 출력하도록 만들어짐, 비어있을수도, item일수도 있다
         //만약 100L라고 한다면? 근데 없다면 null이다.
 

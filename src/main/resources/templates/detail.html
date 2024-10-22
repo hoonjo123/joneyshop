@@ -31,5 +31,14 @@
   <button type="submit">전송</button>
 </form>
 
+<div>
+  <h3>댓글들</h3>
+  <ul>
+    <li th:each="comment : ${comments}">
+      <p th:text="${comment.username} + ': ' + ${comment.content}"></p>
+    </li>
+  </ul>
+</div>
+
 </body>
 </html>

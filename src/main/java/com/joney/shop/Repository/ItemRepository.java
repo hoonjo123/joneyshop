@@ -15,4 +15,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     //pageable을 위한 함수 생성
     Slice<Item> findPageBy(Pageable page);
+
 }
