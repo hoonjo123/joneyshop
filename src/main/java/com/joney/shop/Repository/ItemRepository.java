@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 
 
 //interface를 만들어도 같은 이름을 가진 클래스를 만들어줌
@@ -15,5 +16,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     //pageable을 위한 함수 생성
     Slice<Item> findPageBy(Pageable page);
+
+    List<Item> findAllByTitleContains(String title);
 
 }
