@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Search Results</title>
 
     <link href="/main.css" rel="stylesheet">
 </head>
@@ -12,19 +12,11 @@
 
 <div th:replace="~{ nav.html:: navbar}"></div>
 
+<h1>검색 결과</h1>
+<p>"<span th:text="${query}"></span>"에 대한 검색 결과:</p>
 
-<form action="/search" method="POST">
-    <input name="searchText" style="display: inline">
-    <button>검색</button>
-</form>
-
+<!-- 공통 템플릿을 사용하여 검색 결과 리스트 출력 -->
 <div th:replace="~{_item_list.html :: fragment}"></div>
-
-<div class="pagination">
-    <a th:if="${hasPrevious}" th:href="@{|/list/page/${currentPage - 1}|}">이전</a>
-    <span th:text="'Page ' + ${currentPage}" class="active"></span>
-    <a th:if="${hasNext}" th:href="@{|/list/page/${currentPage + 1}|}">다음</a>
-</div>
 
 </body>
 </html>

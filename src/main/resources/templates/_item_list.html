@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="fragment">
+    <div class="card" th:each="i : ${items}">
+        <img th:if="${i.imageUrl} != null and ${i.imageUrl} != ''" th:src="${i.imageUrl}" alt="상품 이미지" style="width: 300px; height: auto;">
+        <img th:if="${i.imageUrl} == null or ${i.imageUrl} == ''" th:src="'https://placehold.co/300'" alt="기본 이미지" style="width: 300px; height: auto;">
+        <div>
+            <a th:href="@{'/detail/' + ${i.id} }">
+                <h4 th:text="${i.title} "></h4>
+            </a>
+            <h4 th:text="${i.price + '원'}"></h4>
+            <a th:href="@{/edit/{id}(id=${i.id})}">상품수정하기✏️</a>
+            <p>
+                <span th:onclick="fetch('/deleteitem?id=[[${i.id}]]', {method: 'DELETE'})
+                      .then(r => r.text())
+                      .then((a) => {
+                          console.log(a);
+                          location.reload();
+                      })
+                ">🗑️</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

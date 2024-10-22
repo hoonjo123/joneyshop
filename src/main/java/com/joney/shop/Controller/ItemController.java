@@ -13,12 +13,15 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 
@@ -48,14 +51,16 @@ public class ItemController {
     //JPA를 사용해서 데이터를 꺼내오자
 
     @GetMapping("/list")
-    String list(Model model) {
-        List<Item> result = itemRepository.findAll(); //item테이블의 모든 정보, list자료형
-        model.addAttribute("items", result);
-        var a = new Item();
-        System.out.println(a.toString());
-
+    public String getList(Model model, Pageable pageable) {
+        // 페이지에 맞는 아이템 리스트 가져오기
+        Slice<Item> items = itemRepository.findPageBy(pageable);
+        model.addAttribute("items", items.getContent());
+        model.addAttribute("hasPrevious", items.hasPrevious());
+        model.addAttribute("hasNext", items.hasNext());
+        model.addAttribute("currentPage", pageable.getPageNumber());
         return "list.html";
     }
+
 
     @GetMapping("/write")
     String write() {
@@ -217,14 +222,41 @@ public class ItemController {
         return result;
     }
 
+//    @PostMapping("/search")
+//    String postSearch(@RequestParam String searchText){
+//
+//        var result = itemRepository.findAllByTitleContains(searchText);
+//        System.out.println(result);
+//        System.out.println(itemRepository.rawQuery1(searchText));
+//
+//        return "redirect:/search?query=" + searchText;
+//    }
+
     @PostMapping("/search")
-    String postSearch(@RequestParam String searchText){
-
-        var result = itemRepository.findAllByTitleContains(searchText);
-        System.out.println(result);
-        System.out.println(itemRepository.rawQuery1(searchText));
-
-        return "list.html";
+    public String postSearch(@RequestParam String searchText) {
+        // 검색어를 URL 인코딩 처리
+        String encodedSearchText = URLEncoder.encode(searchText, StandardCharsets.UTF_8);
+        return "redirect:/search?query=" + encodedSearchText;
     }
+
+//    @GetMapping("/search")
+//    public String getSearchResults(@RequestParam String query, Model model) {
+//        // 검색어를 이용해 검색 수행
+//        List<Item> searchResults = itemRepository.findAllByTitleContains(query);
+//        // 검색 결과를 모델에 추가
+//        model.addAttribute("items", searchResults);
+//        model.addAttribute("query", query);
+//        // search.html 페이지로 이동
+//        return "search.html";
+//    }
+
+    @GetMapping("/search")
+    public String getSearchResults(@RequestParam String query, Model model) {
+        List<Item> searchResults = itemRepository.findAllByTitleContains(query);
+        model.addAttribute("items", searchResults);
+        model.addAttribute("query", query);
+        return "search.html";
+    }
+
 }
 
