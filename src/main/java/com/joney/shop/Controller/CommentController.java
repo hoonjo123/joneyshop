@@ -41,7 +41,7 @@ public class CommentController {
 
         System.out.println(data);
         commentRepository.save(data);
-        return "redirect:/list";
+        return "redirect:/detail/" + parent;
     }
 
     @GetMapping("/comment-detail")
