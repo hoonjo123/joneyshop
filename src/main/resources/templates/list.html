@@ -32,7 +32,9 @@
 </form>
 
     <div class="card" th:each="i : ${items}">
-        <img th:src="${i.imageUrl}" alt="상품 이미지" style="width: 300px; height: auto;">
+        <img th:if="${i.imageUrl} != null and ${i.imageUrl} != ''" th:src="${i.imageUrl}" alt="상품 이미지" style="width: 300px; height: auto;">
+        <img th:if="${i.imageUrl} == null or ${i.imageUrl} == ''" th:src="'https://placehold.co/300'" alt="기본 이미지" style="width: 300px; height: auto;">
+
         <div>
             <a th:href="@{'/detail/' + ${i.id} }">
                 <h4 th:text="${i.title} "></h4>

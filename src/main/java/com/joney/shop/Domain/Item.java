@@ -10,13 +10,13 @@ import org.springframework.stereotype.Controller;
 @ToString
 @Getter
 @Setter
+@Table(indexes = @Index(columnList = "title", name = "제목찾기"))
 public class Item {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String title;
-
 
     //20억까지만 저장이 가능한 Integer
     //좀 더 큰 숫자는 Long으로 사용 900경까지 사용가능

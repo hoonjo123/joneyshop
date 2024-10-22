@@ -222,6 +222,7 @@ public class ItemController {
 
         var result = itemRepository.findAllByTitleContains(searchText);
         System.out.println(result);
+        System.out.println(itemRepository.rawQuery1(searchText));
 
         return "list.html";
     }
