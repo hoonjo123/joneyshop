@@ -257,6 +257,5 @@ public class ItemController {
         model.addAttribute("query", query);
         return "search.html";
     }
-
 }
 
