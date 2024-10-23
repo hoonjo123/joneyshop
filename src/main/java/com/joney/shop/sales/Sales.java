@@ -1,27 +1,36 @@
 package com.joney.shop.sales;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.joney.shop.Domain.Member;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@ToString
 public class Sales {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String itemName;
+    private String itemName;
 
-    Integer price;
+    private Integer price;
 
-    Integer count;
+    private Integer count;
 
-    Long memberId;
+    @ManyToOne
+    @JoinColumn(
+            name = "member_id",
+            foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT)
+    )
+    private Member member;
 
     @CreationTimestamp
-    LocalDateTime created;
+    private LocalDateTime created;
 }

@@ -5,7 +5,7 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>상세페이지</title>
 
   <link href="/main.css" rel="stylesheet">
 
@@ -29,6 +29,13 @@
   <input name="content" placeholder="댓글 입력해">
   <input name="parent" th:value="${items.id}" type="hidden">
   <button type="submit">전송</button>
+</form>
+
+<form action="/order" method="POST">
+  <input name="title" th:value="${items.title}" type="hidden">
+  <input name="price" th:value="${items.price}" type="hidden">
+  <input name="count" placeholder="count">
+  <button style="text-align : left">주문하기</button>
 </form>
 
 <div>
