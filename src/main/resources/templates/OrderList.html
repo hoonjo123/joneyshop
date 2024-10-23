@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>주문내역</title>
+</head>
+<body>
+
+<h2>주문 내역</h2>
+<div class="order-list">
+
+  <div class="card" th:each="order : ${orders}">
+    <h3 th:text="${order.itemName}">상품 이름</h3>
+    <p>수량: <span th:text="${order.count}">0</span></p>
+    <p>가격: <span th:text="${order.price}">0</span>원</p>
+    <p th:if="${order.member != null}">회원: <span th:text="${order.member.username}">회원 이름</span></p>
+    <hr/>
+  </div>
+
+</div>
+
+<script>
+
+</script>
+
+
+</body>
+</html>

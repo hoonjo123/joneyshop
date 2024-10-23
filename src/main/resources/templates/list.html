@@ -8,6 +8,7 @@
 
     <link href="/main.css" rel="stylesheet">
 </head>
+
 <body>
 
 <div th:replace="~{ nav.html:: navbar}"></div>
@@ -25,6 +26,15 @@
     <span th:text="'Page ' + ${currentPage}" class="active"></span>
     <a th:if="${hasNext}" th:href="@{|/list/page/${currentPage + 1}|}">다음</a>
 </div>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const isSuccess = urlParams.get('success');
+
+if (isSuccess === 'true') {
+alert('주문이 성공적으로 완료되었습니다. 감사요.');
+}
+</script>
 
 </body>
 </html>
