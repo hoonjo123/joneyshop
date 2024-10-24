@@ -1,5 +1,7 @@
 <div class="nav" th:fragment="navbar">
-  <a class="logo">SpringMall</a>
-  <a href="/list">List</a>
-  <a href="/write">Write</a>
+  <br>
+  <h2><a class="logo">SpringMall</a></h2>
+  <a th:href="@{'/list/page/1'}">상품목록</a>
+  <a href="/write">상품등록</a>
+  <a href="/order/all">주문목록</a>
 </div>
