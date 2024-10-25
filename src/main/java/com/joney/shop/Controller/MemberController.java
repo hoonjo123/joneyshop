@@ -5,6 +5,9 @@ import com.joney.shop.Domain.Member;
 import com.joney.shop.Repository.MemberRepository;
 import com.joney.shop.Service.CustomUser;
 import com.joney.shop.Service.MemberService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -114,7 +118,8 @@ public class MemberController {
     }
     @PostMapping("/login/jwt")
     @ResponseBody
-    public String loginJWT(@RequestBody Map<String,String> data){
+    public String loginJWT(@RequestBody Map<String,String> data,
+                           HttpServletResponse response){
 
         var authToken = new UsernamePasswordAuthenticationToken(
                 data.get("username"), data.get("password")
@@ -126,7 +131,24 @@ public class MemberController {
         var jwt = JwtUtil.createToken(SecurityContextHolder.getContext().getAuthentication());
         System.out.println(jwt);
 
+        var cookie = new Cookie("jwt",jwt);
+        cookie.setMaxAge(100);//초단위로 넣어주셈
+        cookie.setHttpOnly(true);//쿠키를 자바스크립트로 조작하는것 방지
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
         return jwt;
+    }
+
+    @GetMapping("/my-page/jwt")
+    @ResponseBody
+    String mypageJWT(){
+
+        //일일이 jwt적어주는게 귀찮은뎅
+        // filter와 interceptor를 사용해보자
+
+
+        return "";
     }
 }
 class MemberDto{
