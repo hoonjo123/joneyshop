@@ -34,6 +34,8 @@ public static String createToken(Authentication auth){
             .expiration(new Date(System.currentTimeMillis() + 100000)) //유효기간 10초 //ms단위로
             .signWith(key)
             .compact();
+    System.out.println("displayName: " + user.displayName);
+
     return jwt;
 }
 

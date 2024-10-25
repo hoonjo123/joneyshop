@@ -53,9 +53,9 @@
 <script>
     function getMyPage(){
       fetch('/mypage/jwt')
-        .then(() => r.text())
-        .then(() => {console.log(r)})
-
+        .then((r) => r.text())
+        .then((r) => {console.log(r)});
+    }
 </script>
 
 </body>

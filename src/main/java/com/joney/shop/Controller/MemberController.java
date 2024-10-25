@@ -70,7 +70,9 @@ public class MemberController {
     }
 
     @PostMapping("/member")
-    String joinMember(String username, String password, String displayname){
+    String joinMember(@RequestParam String username,
+                      @RequestParam String password,
+                      @RequestParam String displayname){
         Member member = new Member();
 
         member.setUsername(username);
@@ -140,15 +142,20 @@ public class MemberController {
         return jwt;
     }
 
-    @GetMapping("/my-page/jwt")
+    @GetMapping("/mypage/jwt")
     @ResponseBody
-    String mypageJWT(){
+    String mypageJWT(Authentication auth){
+
+        var user = (CustomUser) auth.getPrincipal();
+        System.out.println(user);
+        System.out.println(user.displayName);
+        System.out.println(user.getAuthorities());
 
         //일일이 jwt적어주는게 귀찮은뎅
         // filter와 interceptor를 사용해보자
 
 
-        return "";
+        return "mypage 데이터 출력";
     }
 }
 class MemberDto{
