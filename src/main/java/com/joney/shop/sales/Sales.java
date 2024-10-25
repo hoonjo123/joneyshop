@@ -24,7 +24,8 @@ public class Sales {
 
     private Integer count;
 
-    @ManyToOne
+    //Lazy를 사용하면 필요할 때만 가져온다. Eager와 비교시 차이가 남.
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "member_id",
             foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT)
