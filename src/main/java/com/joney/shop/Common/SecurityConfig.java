@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -54,6 +55,8 @@ public class SecurityConfig {
         http.sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
+
+        http.addFilterBefore(new JwtFilter(), ExceptionTranslationFilter.class);
 
         http.authorizeHttpRequests((authorize) ->
                 authorize.requestMatchers("/**").permitAll()
