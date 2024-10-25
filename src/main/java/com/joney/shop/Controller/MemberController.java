@@ -1,12 +1,18 @@
 package com.joney.shop.Controller;
 
+import com.joney.shop.Common.JwtUtil;
 import com.joney.shop.Domain.Member;
 import com.joney.shop.Repository.MemberRepository;
 import com.joney.shop.Service.CustomUser;
 import com.joney.shop.Service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,19 +21,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
 
+    private final AuthenticationManager authenticationManager;
     private final MemberRepository memberRepository;
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
+
 
     @GetMapping("/members")
     String memberList(Model model) {
@@ -106,6 +111,22 @@ public class MemberController {
 
         var data = new MemberDto(result.getUsername(),result.getDisplayName(),result.getId());
         return data;
+    }
+    @PostMapping("/login/jwt")
+    @ResponseBody
+    public String loginJWT(@RequestBody Map<String,String> data){
+
+        var authToken = new UsernamePasswordAuthenticationToken(
+                data.get("username"), data.get("password")
+        );
+
+        var auth = authenticationManager.authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        var jwt = JwtUtil.createToken(SecurityContextHolder.getContext().getAuthentication());
+        System.out.println(jwt);
+
+        return jwt;
     }
 }
 class MemberDto{

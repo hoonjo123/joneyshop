@@ -40,6 +40,12 @@ dependencies {
 
 	//s3 세팅을 위한 라이브러리설치
 	implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.1.1'
+
+	//DB의 부담을 덜하기 위해 JWT를 이용해서 로그인을 구현해보자.
+	//JWT의 생성과 검증을 도와주는 라이브러리
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+	implementation 'io.jsonwebtoken:jjwt-gson:0.12.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
 }
 
 tasks.named('test') {
