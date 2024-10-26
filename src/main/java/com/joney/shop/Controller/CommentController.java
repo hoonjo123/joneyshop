@@ -28,6 +28,7 @@ public class CommentController {
         }
 
         CustomUser user = (CustomUser) auth.getPrincipal();
+        System.out.println("Auth Principal: " + auth.getPrincipal());
 
 
 
@@ -41,6 +42,7 @@ public class CommentController {
 
         System.out.println(data);
         commentRepository.save(data);
+
         return "redirect:/detail/" + parent;
     }
 

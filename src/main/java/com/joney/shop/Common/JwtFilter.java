@@ -73,8 +73,10 @@ public class JwtFilter extends OncePerRequestFilter {
                 .toList();
 
         // 클레임에서 username과 displayname 추출 및 null 체크
+// 클레임에서 username과 displayname 추출 및 null 체크
         String username = claim.get("username") != null ? claim.get("username").toString() : "anonymous";
         String displayName = claim.get("displayname") != null ? claim.get("displayname").toString() : "anonymous";
+
         System.out.println("Decoded displayname: " + displayName);
 
         // CustomUser 객체 생성
@@ -83,7 +85,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 "none",
                 authorities
         );
-        customUser.setDisplayName(claim.get("displayName").toString());
+        customUser.setDisplayName(displayName);
+//        customUser.setDisplayName(claim.get("displayName").toString());
 
         var authToken = new UsernamePasswordAuthenticationToken(
                 customUser,
