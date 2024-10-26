@@ -31,7 +31,7 @@ public static String createToken(Authentication auth){
             .claim("displayName", user.displayName)
             .claim("authorities", authorities)
             .issuedAt(new Date(System.currentTimeMillis()))
-            .expiration(new Date(System.currentTimeMillis() + 100000)) //유효기간 10초 //ms단위로
+            .expiration(new Date(System.currentTimeMillis() + 1000)) //유효기간 10초 //ms단위로
             .signWith(key)
             .compact();
     System.out.println("displayName: " + user.displayName);

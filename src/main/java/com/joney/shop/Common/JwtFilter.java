@@ -83,7 +83,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 "none",
                 authorities
         );
-        customUser.setDisplayName(claim.get("displayName").toString()); // Setter를 사용해서 displayName 설정
+        customUser.setDisplayName(claim.get("displayName").toString());
 
         var authToken = new UsernamePasswordAuthenticationToken(
                 customUser,
