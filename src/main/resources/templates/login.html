@@ -20,13 +20,13 @@
 </div>
 
 
-<form action="/login" method="POST">
-    아이디
-    <input name="username">
-    비밀번호
-    <input name="password" type="password" >
-    <button type="submit">전송</button>
-</form>
+<!--<form action="/login" method="POST">-->
+<!--    아이디-->
+<!--    <input name="username">-->
+<!--    비밀번호-->
+<!--    <input name="password" type="password" >-->
+<!--    <button type="submit">전송</button>-->
+<!--</form>-->
 
 <form>
     아이디
@@ -34,7 +34,7 @@
     비밀번호
     <input name="password" type="password" id="password" >
 </form>
-<button onclick="loginJWT()">전송</button>
+<button onclick="loginJWT()">로그인</button>
 
 <script>
     function loginJWT(){
@@ -49,7 +49,7 @@
     }
 </script>
 
-<button onclick="getMyPage()">jwt마이페이지주세용</button>
+<!--<button onclick="getMyPage()">jwt마이페이지주세용</button>-->
 <script>
     function getMyPage(){
       fetch('/mypage/jwt')

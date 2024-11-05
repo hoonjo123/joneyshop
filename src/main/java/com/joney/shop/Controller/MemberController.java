@@ -168,6 +168,37 @@ public class MemberController {
         return accessToken;
     }
 
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUser) {
+            CustomUser user = (CustomUser) authentication.getPrincipal();
+
+            // 데이터베이스에서 리프레시 토큰 삭제
+            refreshTokenRepository.deleteByMemberId(user.getId());
+        }
+
+        Cookie jwtCookie = new Cookie("jwt", null);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(0);
+
+        Cookie refreshCookie = new Cookie("refreshToken", null);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setPath("/");
+        refreshCookie.setMaxAge(0);
+
+        response.addCookie(jwtCookie);
+        response.addCookie(refreshCookie);
+
+
+        SecurityContextHolder.clearContext();
+
+        return "redirect:/login";
+    }
+
+
+
     @GetMapping("/mypage/jwt")
     @ResponseBody
     String mypageJWT(Authentication auth) {

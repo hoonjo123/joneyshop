@@ -4,4 +4,12 @@
   <a th:href="@{'/list/page/1'}">상품목록</a>
   <a href="/write">상품등록</a>
   <a href="/order/all">주문목록</a>
+
+  <div>
+    <!-- 로그인되어 있지 않으면 "로그인" 버튼 표시 -->
+    <a sec:authorize="!isAuthenticated()" href="/login">로그인</a>
+
+    <!-- 로그인되어 있으면 "로그아웃" 버튼 표시 -->
+    <a sec:authorize="isAuthenticated()" href="/logout">로그아웃</a>
+  </div>
 </div>
