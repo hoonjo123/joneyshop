@@ -52,6 +52,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .claim("username", user.getUsername())
                 .claim("displayName", user.getDisplayName())
+                .claim("id", user.getId())
                 .claim("authorities", user.getAuthorities())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15))
@@ -62,6 +63,7 @@ public class JwtUtil {
     public static String createRefreshToken(CustomUser user) {
         return Jwts.builder()
                 .claim("username", user.getUsername())
+                .claim("id", user.getId()) // ID 값을 추가
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)) // 7 days expiration
                 .signWith(key)

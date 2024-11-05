@@ -1,5 +1,6 @@
 package com.joney.shop.Service;
 
+import com.joney.shop.Domain.Member;
 import com.joney.shop.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +33,7 @@ public class MyUserDetailsService implements UserDetailsService {
 //        user.setUsername();
 //        user.getDisplayName();
         }
-        var user = result.get();
+        Member member = result.get();
 //        List<GrantedAuthority> 권한 = new ArrayList<String>();
 //        권한.add("");
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -40,9 +41,12 @@ public class MyUserDetailsService implements UserDetailsService {
 
         //특정아이디에 권한을 주고 싶다면? if문을 써서 해당 유저가 관리자임이라고 명시해주면 된다.
 
-        CustomUser customUser = new CustomUser(user.getUsername(),user.getPassword(),authorities);
-        customUser.displayName = user.getDisplayName();
-        customUser.id = user.getId();
+        CustomUser customUser = new CustomUser(
+                member.getUsername(),
+                member.getPassword(),
+                authorities,
+                member.getId());
+        customUser.setDisplayName(member.getDisplayName());
 
         return customUser;
 

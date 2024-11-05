@@ -76,6 +76,14 @@ public class JwtFilter extends OncePerRequestFilter {
 // 클레임에서 username과 displayname 추출 및 null 체크
         String username = claim.get("username") != null ? claim.get("username").toString() : "anonymous";
         String displayName = claim.get("displayname") != null ? claim.get("displayname").toString() : "anonymous";
+        // 수정된 부분: ID 값을 추출할 때 Number로 캐스팅 후 Long으로 변환
+        Long id = null;
+        try {
+            id = claim.get("id") != null ? ((Number) claim.get("id")).longValue() : null;
+        } catch (ClassCastException e) {
+            throw new RuntimeException("Invalid ID format in JWT token", e);
+        }
+
 
         System.out.println("Decoded displayname: " + displayName);
 
@@ -83,7 +91,8 @@ public class JwtFilter extends OncePerRequestFilter {
         var customUser = new CustomUser(
                 username,
                 "none",
-                authorities
+                authorities,
+                id
         );
         customUser.setDisplayName(displayName);
 //        customUser.setDisplayName(claim.get("displayName").toString());

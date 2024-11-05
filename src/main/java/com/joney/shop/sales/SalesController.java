@@ -34,6 +34,7 @@ public class SalesController {
 
         CustomUser customUser = (CustomUser) auth.getPrincipal();
 //        System.out.println(user.id);
+        System.out.println("User ID: " + customUser.getId());
         Member member = memberRepository.findById(customUser.getId()).orElseThrow(
                 () -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다.")
         );

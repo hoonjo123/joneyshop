@@ -14,7 +14,8 @@ public class CustomUser extends User {
     public Long id;
     public String displayName;
 
-    public CustomUser(String username, String password, List<GrantedAuthority> authorities) {
+    public CustomUser(String username, String password, List<GrantedAuthority> authorities, Long id) {
         super(username, password, authorities);
+        this.id = id;
     }
 }
