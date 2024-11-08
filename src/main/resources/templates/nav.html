@@ -1,6 +1,6 @@
 <div class="nav" th:fragment="navbar">
   <br>
-  <h2><a class="logo">SpringMall</a></h2>
+  <h2><a class="logo" href="/">SpringMall</a></h2>
   <a th:href="@{'/list/page/1'}">상품목록</a>
   <a href="/write">상품등록</a>
   <a href="/order/all">주문목록</a>
@@ -10,6 +10,25 @@
     <a sec:authorize="!isAuthenticated()" href="/login">로그인</a>
 
     <!-- 로그인되어 있으면 "로그아웃" 버튼 표시 -->
-    <a sec:authorize="isAuthenticated()" href="/logout">로그아웃</a>
+    <a sec:authorize="isAuthenticated()" href="/logout" onclick="logout()">로그아웃</a>
   </div>
 </div>
+
+<script>
+  function logout() {
+    fetch('/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }).then(response => {
+      if (response.ok) {
+        window.location.href = '/login';
+      } else {
+        alert('로그아웃 실패');
+      }
+    }).catch(error => {
+      console.error('로그아웃 오류:', error);
+    });
+  }
+</script>

@@ -2,6 +2,7 @@ package com.joney.shop.Controller;
 
 import com.joney.shop.Common.JwtUtil;
 import com.joney.shop.Domain.Member;
+import com.joney.shop.Domain.MemberRole;
 import com.joney.shop.Domain.RefreshToken;
 import com.joney.shop.Dto.MemberDto;
 import com.joney.shop.Repository.MemberRepository;
@@ -75,16 +76,20 @@ public class MemberController {
     }
 
     @PostMapping("/member")
-    String joinMember(@RequestParam String username,
-                      @RequestParam String password,
-                      @RequestParam String displayname) {
+    public String joinMember(@RequestParam String username,
+                             @RequestParam String password,
+                             @RequestParam String displayname,
+                             @RequestParam String zoneCode,
+                             @RequestParam String roadAddress,
+                             @RequestParam String detailAddress) {
         Member member = new Member();
-
         member.setUsername(username);
-        var hash = passwordEncoder.encode(password);
-
-        member.setPassword(hash);
+        member.setPassword(passwordEncoder.encode(password));
         member.setDisplayName(displayname);
+        member.setZoneCode(zoneCode);
+        member.setRoadAddress(roadAddress);
+        member.setDetailAddress(detailAddress);
+
         memberRepository.save(member);
         return "redirect:/login";
     }
@@ -171,11 +176,28 @@ public class MemberController {
     @PostMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof CustomUser) {
-            CustomUser user = (CustomUser) authentication.getPrincipal();
+        if (authentication != null) {
+            System.out.println("Authentication: " + authentication);
+            System.out.println("Principal: " + authentication.getPrincipal());
 
-            // 데이터베이스에서 리프레시 토큰 삭제
-            refreshTokenRepository.deleteByMemberId(user.getId());
+            if (authentication.getPrincipal() instanceof CustomUser) {
+                CustomUser user = (CustomUser) authentication.getPrincipal();
+                System.out.println("로그아웃 요청: " + user.getUsername());
+
+                // 데이터베이스에서 리프레시 토큰 조회 및 삭제
+                List<RefreshToken> tokens = refreshTokenRepository.findByMemberId(user.getId());
+                if (!tokens.isEmpty()) {
+                    System.out.println("삭제할 리프레시 토큰 수: " + tokens.size());
+                    refreshTokenRepository.deleteAll(tokens); // 모든 리프레시 토큰 삭제
+                    System.out.println("리프레시 토큰 삭제 완료");
+                } else {
+                    System.out.println("삭제할 리프레시 토큰이 없습니다.");
+                }
+            } else {
+                System.out.println("Authentication 객체가 CustomUser 타입이 아닙니다.");
+            }
+        } else {
+            System.out.println("인증 객체가 null입니다.");
         }
 
         Cookie jwtCookie = new Cookie("jwt", null);
@@ -245,6 +267,16 @@ public class MemberController {
         // Optionally, update refresh token and re-save it
         return newAccessToken;
     }
+    @PatchMapping("/members/{id}/role")
+    @ResponseBody
+    public String updateRoleToAdmin(@PathVariable Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("해당 멤버를 찾을 수 없습니다."));
+        member.setRole(MemberRole.ADMIN);
+        memberRepository.save(member);
+        return "Role updated to ADMIN for member ID " + id;
+    }
+
 
 
     class MemberDto {

@@ -31,6 +31,7 @@ public class JwtFilter extends OncePerRequestFilter {
 //request에는 수많은 정보들이 있다. ip, os정보 등등 이를 통해 검렬가능
 
 
+
         Cookie[] cookies = request.getCookies();
 
         //null이라면 통과시켜주세욤
@@ -38,6 +39,8 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+
+
 
 
         //쿠키값이 항상 jwt가 아닐 수 있으므로 for문으로 쿠키안에 잇는 jwt값을 출력해보자.

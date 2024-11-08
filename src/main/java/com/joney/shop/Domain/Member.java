@@ -20,11 +20,27 @@ public class Member {
     private Long id;
 
 //    @Column(unique = true)
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String displayName;
 
+    @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private MemberRole role = MemberRole.USER;
+
+    @Column(nullable = false, length = 200)
+    private String zoneCode;
+
+    @Column(nullable = false)
+    private String roadAddress;
+
+    @Column(nullable = false)
+    private String detailAddress;
 
     //이렇게 작성하면 stackoverflow가 발생
     //exclude를 사용해야함
